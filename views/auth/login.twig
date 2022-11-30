@@ -1,0 +1,25 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+
+<center>
+<div class="form">
+    <h1>Вхід</h1>
+    <br>
+    <hr width='auto'x>
+    <br>
+    <form method="post" action="signin">
+    {% if error %}
+        <div><font size='5px' color='red'>{{ error }}</font></div>
+        <br>
+    {% endif %}
+        <table cellspacing="5">
+            <tr><td><label for="email">Email: </label></td><td><input type="text" id="email" name="email"></td></tr>
+            <tr><td><label for="password">Пароль: </label></td><td><input type="password" id="password" name="password"></td></tr>
+        </table>
+        <button type="submit" id="button_form">Увійти</button>
+    </form>
+</div>
+</center>
+
+{% endblock %}
