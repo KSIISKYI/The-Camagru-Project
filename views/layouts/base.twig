@@ -1,58 +1,92 @@
 <!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<link type="text/css" rel="stylesheet" href="public/css/style.css">
-	<title>{{ title }}</title>
-</head>
-<body>
+<html lang="ru">
 
-    <div class="wrapper">
-        <div class='page'>
-            <div class="header">
-                <div class="header_top"></div>
-                <div class='header_inner'>
-                    <a href="/"><img src="public/img/home.png" width="60" height="60" class="image_home"></a>
-                    {# <div>
-                        <form action="{% url 'search' %}" method="get">
-                            <table>
-                                <tr>
-                                    <td><input type="text" name="q" class="text_search" value="{{ search_value }}"></td>
-                                    <td><input type="submit" value="Пошук" class="button_search"></td>
-                                </tr>
-                            </table>
-                        </form>
-                    </div> #}
-					<nav class="head_nav">
-                      
-                            <a href="#" class="nav_link">Головна</a>
-                            <a href="#" class="nav_link">Всі зображення</a>
-                      
-                            <p class='auth'>
-                                <a href="#" id='login_link'>Вхід</a> |
-                                <a href="#" id='register_link'>Реєстрація</a>
-                            </p>
-                
-                    </nav>
-                </div>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Camagru</title>
+    <link rel="stylesheet" href="public/css/normalize.css">
+    <link rel="stylesheet" href="public/css/style.css">
+
+    <script defer src="public/js/main.js"></script>
+</head>
+
+<body>
+    <div class="page">
+
+    <header class="header">
+        <div class="header__container">
+            <button class="header__burger-btn" id="burger">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="header__item headerlogo">
+                <img src="public/img/logo_icon2.png" id="logo_icon">
+                CAMAGRU
             </div>
-            <div class="content">
-                <div class="menu_bar">
-                    <div class="menu_bar_inner">
-                    <ul>
-                      <li class="menu_cat"><img src="public/img/exapmle.jpg"></li>
-                      <li class="menu_cat"><img src="public/img/exapmle.jpg"></li>
-                      <li class="menu_cat"><img src="public/img/exapmle.jpg"></li>
-                      <li class="menu_cat"><img src="public/img/exapmle.jpg"></li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="content_inner">
-                    {% block content %}
-                    {% endblock %}
-                </div>
-            </div>
+
+            <nav class="menu">
+                <ul class="menu__list">
+                {% if getUser() %}
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="#">
+                                GALLERY
+                            </a> 
+                        </div>
+                    </li>
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="{{ route({'name':'profile'}) }}">
+                                {{ getUser().user_name }}
+                            </a> 
+                        </div>
+                    </li>
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="#">
+                                SETTING
+                            </a> 
+                        </div>
+                    </li>
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="{{ route({'name':'logout'}) }}">
+                                SIGN OUT
+                            </a> 
+                        </div>
+                    </li>
+                {% else %}
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="{{ route({'name':'login'}) }}">
+                                SIGN IN
+                            </a> 
+                        </div>
+                    </li>
+                    <li class="menu__item">
+                        <div class="header__item headerButton">
+                            <a class="menu__link" href="{{ route({'name':'register'}) }}">
+                                SIGN UP
+                            </a> 
+                        </div>
+                    </li>
+                {% endif %}
+                </ul>
+            </nav>
         </div>
+    </header>
+
+    <div class="content">
+    {% block content %}
+    {% endblock %}
+    </div>
+
+    <div class="footer">
+            © 2022, The Camagru Project
+    </div>
+
     </div>
 </body>
+
 </html>

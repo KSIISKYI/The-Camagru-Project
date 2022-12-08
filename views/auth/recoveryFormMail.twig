@@ -1,0 +1,21 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+
+<div class="form">
+	<form action="{{ route({'name':'send_recovery_mail'}) }}" method="GET">
+	    <h1>Password Recovery Process</h1>
+
+		<div class="container">
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" name="email" required>
+
+			<button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Recovery Password</button>
+		</div>
+		{% if form_message %}
+            <p style="color: red">{{ form_message }}</p>
+        {% endif %}
+	</form>
+</div>
+
+{% endblock %}

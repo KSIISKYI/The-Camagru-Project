@@ -9,4 +9,3 @@ session_start();
 
 $router = new Router(new Request);
 $router->run();
-

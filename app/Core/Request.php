@@ -15,5 +15,4 @@ class Request
         $this->data = $this->server['REQUEST_METHOD'] == 'POST' ? $_POST : $_GET;
         $this->files = $_FILES;
     }
-
 }

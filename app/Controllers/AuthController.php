@@ -2,7 +2,6 @@
 
 namespace App\Controllers;
 
-
 use App\Models\User;
 use App\Core\Controller;
 
@@ -18,15 +17,15 @@ class AuthController extends Controller
         $data = $this->request->data;
         $user_model = new User;
 
-        if (!$user = $user_model->filter(['email' => $data['email']])) {
-            return $this->view->render('auth/login.twig', ['error' => 'Email або пароль уведені невірно']);
+        if (!$user = $user_model->get('email', $data['email']) or !password_verify($data['password'], $user['password'])) {
+            return $this->view->render('auth/login.twig', ['form_message' => 'Email або пароль уведені невірно']);
             exit();
-        } elseif (!password_verify($data['password'], $user[0]['password'])) {
-            return $this->view->render('auth/login.twig', ['error' => 'Email або пароль уведені невірно']);
+        } elseif (!$user['is_active']) {
+            return $this->view->render('auth/login.twig', ['form_message' => 'Перейдіть на почту на веріфікуйте email']);
             exit();
         } else {
-            $_SESSION['user_id'] = $user[0]['id'];
-            header('Location: ' . SITE_NAME);
+            $_SESSION['user_id'] = $user['id'];
+            header('Location: profile');
             exit();
         }
     }

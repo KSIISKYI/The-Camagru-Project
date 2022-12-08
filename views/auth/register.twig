@@ -2,26 +2,33 @@
 
 {% block content %}
 
-<center>
 <div class="form">
-    <h1>Реєстраєція</h1>
-    <br>
-    <hr width='auto'x>
-    <br>
-    <form method="post" action="signup">
-    {% if error %}
-        <div><font size='5px' color='red'>{{ error }}</font></div>
-        <br>
-    {% endif %}
-        <table cellspacing="5">
-            <tr><td><label for="user_name">Ім'я користувача: </label></td><td><input type="text" id="user_name" name="user_name"></td></tr>
-            <tr><td><label for="email">Email: </label></td><td><input type="text" id="email" name="email"></td></tr>
-            <tr><td><label for="password">Пароль: </label></td><td><input type="password" id="password" name="password"></td></tr>
-            <tr><td><label for="confirm_password">Повторіть пароль: </label></td><td><input type="password" id="confirm_password" name="confirm_password"></td></tr>
-        </table>
-        <button type="submit" id="button_form">Зареєструватися</button>
-    </form>
-</div>
-</center>
+    <form action="{{ route({'name':'signup'}) }}" method="post">
+            <h1>Sign Up</h1>
+
+            <div class="container">
+                <label for="user_name"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="user_name" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" required>
+
+                <label for="password"><b>Password</b></label>
+                <input type="password" placeholder="Enter Password" name="password" required>
+
+                <label for="uname"><b>Confirm Password</b></label>
+                <input type="password" placeholder="Enter Confirm Password" name="confirm_password" required>
+
+                <button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Sign Up</button>
+                        <!-- <p>Successful! Check your email and confirm it</p> -->
+                </div>
+                {% if form_message %}
+                    <p style="color: red">{{ form_message }}</p>
+                {% endif %}
+            </form>
+        </div>
+        <div class="form new_acc">
+            <a class="color_form" href="{{ route({'name':'login'}) }}">Do you have an account? Sign in</a>
+        </div>
 
 {% endblock %}

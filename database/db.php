@@ -16,5 +16,18 @@ $db->query('CREATE TABLE IF NOT EXISTS users (
 	is_active BOOLEAN DEFAULT FALSE,
 	password TEXT NOT NULL);');
 
+$db->query('CREATE TABLE pending_users (
+    token CHAR(40) NOT NULL,
+    user_id integer NOT NULL,
+    tstamp INTEGER UNSIGNED NOT NULL,
+    PRIMARY KEY(token)
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);');
 
-
+$db->query('CREATE TABLE recovery_users (
+    token CHAR(40) NOT NULL,
+    user_id integer NOT NULL,
+    tstamp INTEGER UNSIGNED NOT NULL,
+    PRIMARY KEY(token)
+	FOREIGN KEY(user_id) REFERENCES users(id)
+);');
