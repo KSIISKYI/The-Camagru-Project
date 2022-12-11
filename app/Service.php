@@ -7,34 +7,39 @@ use PHPMailer\PHPMailer\{PHPMailer, Exception, SMTP};
 use App\Models\{User, PendingUser, RecoveryUser};
 use App\Core\View;
 
+require APP_ROOT . '/app/Core/funcs.php';
+
 class Service
 {
     static function createUser(array $data, $view)
     {
-        if ($data['password'] !== $data['confirm_password']) {
-            echo $view->render('auth/register.twig', ['form_message' => 'Паролі не збігаються']);
-            exit();
+        $user_model = new User;
+
+        $form_messages = [];
+
+        if ($user_model->filter(['user_name' => $data['user_name']])) {
+            $form_messages[] = 'A user with this name already exists';
         }
 
-        $user = new User;
+        if ($user_model->filter(['email' => $data['email']])) {
+            $form_messages[] = 'A user with this email already exists';
+        }
 
-        if ($user->filter(['user_name' => $data['user_name']])) {
-            echo $view->render('auth/register.twig', ['form_message' => 'Користувач з такий username існує']);
-            exit();
-        } elseif ($user->filter(['email' => $data['email']])) {
-            echo $view->render('auth/register.twig', ['form_message' => 'Користувач з такий email існує']);
-            exit();
+        if ($errors = checkPassword($data['password'], $data['confirm_password'])) {
+            $form_messages = array_merge($form_messages, $errors);
+        }
+
+        if ($form_messages) {
+            return $form_messages;
         } else {
             unset($data['confirm_password']);
             $data['password'] = password_hash($data['password'], PASSWORD_DEFAULT);
-            $user->create($data);
+            $user_model->create($data);
             self::createPendingUser($data['user_name']);
             self::sendActivationMail($data['user_name']);
     
-            return True;
+            return [];
         }
-
-        return False; 
     }
 
     static function createPendingUser($username)
@@ -55,7 +60,6 @@ class Service
         $mail = new PHPMailer(true);
 
         try {
-            $mail->SMTPDebug = SMTP::DEBUG_SERVER; 
             $mail->isSMTP();
             $mail->Host       = 'smtp.ukr.net';
             $mail->SMTPAuth   = true;

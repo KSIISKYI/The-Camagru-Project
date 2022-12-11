@@ -17,8 +17,10 @@ class RegisterController extends Controller
     {
         $data = $this->request->data;
 
-        if ($this->service::createUser($data, $this->view)) {
-            return $this->view->render('auth/register.twig', ['form_message' => 'Реєстрація успішна, перейдійть на Ваш email та підтвердіть його']);
+        if (!$errors = $this->service::createUser($data, $this->view)) {
+            return $this->view->render('auth/register.twig', ['form_messages' => ['Registration is successful, go to your email and confirm it']]);
+        } else {
+            return $this->view->render('auth/register.twig', ['form_messages' => $errors]);
         }
     }
 

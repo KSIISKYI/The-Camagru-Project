@@ -18,10 +18,10 @@ class AuthController extends Controller
         $user_model = new User;
 
         if (!$user = $user_model->get('email', $data['email']) or !password_verify($data['password'], $user['password'])) {
-            return $this->view->render('auth/login.twig', ['form_message' => 'Email або пароль уведені невірно']);
+            return $this->view->render('auth/login.twig', ['form_message' => 'Email or password entered incorrectly']);
             exit();
         } elseif (!$user['is_active']) {
-            return $this->view->render('auth/login.twig', ['form_message' => 'Перейдіть на почту на веріфікуйте email']);
+            return $this->view->render('auth/login.twig', ['form_message' => 'We have sent you an email with information about mail verification']);
             exit();
         } else {
             $_SESSION['user_id'] = $user['id'];

@@ -22,8 +22,10 @@
                 <button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Sign Up</button>
                         <!-- <p>Successful! Check your email and confirm it</p> -->
                 </div>
-                {% if form_message %}
-                    <p style="color: red">{{ form_message }}</p>
+                {% if form_messages %}
+                    {% for message in form_messages %}
+                        <p style="color: red">{{ message }}</p>
+                    {% endfor %}
                 {% endif %}
             </form>
         </div>

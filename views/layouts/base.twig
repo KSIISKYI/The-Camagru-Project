@@ -20,9 +20,11 @@
             <button class="header__burger-btn" id="burger">
                 <span></span><span></span><span></span>
             </button>
-            <div class="header__item headerlogo">
+            <div class="header__item headerlogo headerButton">
                 <img src="public/img/logo_icon2.png" id="logo_icon">
-                CAMAGRU
+                <a class="menu__link" href="{{ route({'name':'home'}) }}" style="display: inline">
+                    CAMAGRU
+                </a>
             </div>
 
             <nav class="menu">
@@ -44,8 +46,8 @@
                     </li>
                     <li class="menu__item">
                         <div class="header__item headerButton">
-                            <a class="menu__link" href="#">
-                                SETTING
+                            <a class="menu__link" href="{{ route({'name':'settings'}) }}">
+                                SETTINGS
                             </a> 
                         </div>
                     </li>

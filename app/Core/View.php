@@ -51,7 +51,7 @@ class AssetExtension extends AbstractExtension
             }
         }
 
-        if (!$route) {
+        if (!isset($route)) {
             return '#';
         } else {
             unset($arr['name']);

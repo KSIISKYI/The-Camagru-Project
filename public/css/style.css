@@ -179,27 +179,24 @@ body {
     .headerButton:hover {
         background-color: #225f7f;
         border-radius: 4px;
-}
+    }
+    .content__inner {
+        flex-direction: column;
+    }
 
 }
-
-
-
-
-
-
-
-
 
 .content {
     padding: 25px;
 }
 
-
+.content__inner {
+    display:flex;
+}
 
 .form {
     width: 40%;
-    min-width: 300px;
+    min-width: 400px;
     margin: 0 auto;
     background-color: white;
     border-radius: 10px;

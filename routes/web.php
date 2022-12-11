@@ -78,4 +78,25 @@ return [
         'http_method' => 'GET',
         'name' => 'profile',
     ],
+    '' => [
+        'controller' => 'HomeController',
+        'action' => 'index',
+        'middleware' => [],
+        'http_method' => 'GET',
+        'name' => 'home',
+    ],
+    'settings' => [
+        'controller' => 'UserController',
+        'action' => 'getSettingProfile',
+        'middleware' => ['Authenticate'],
+        'http_method' => 'GET',
+        'name' => 'settings',  
+    ],
+    'update_settings' => [
+        'controller' => 'UserController',
+        'action' => 'updateSettingProfile',
+        'middleware' => ['Authenticate'],
+        'http_method' => 'POST',
+        'name' => 'update_settings',  
+    ],
 ];
