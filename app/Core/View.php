@@ -40,27 +40,7 @@ class AssetExtension extends AbstractExtension
 
     function getRoute($arr)
     {
-        $routes = require APP_ROOT . '/routes/web.php';
-        $url_prefix = 'http://' .$_SERVER['HTTP_HOST'] . URL_ROOT;
-
-        $route = null;
-
-        foreach($routes as $route_pattern => $params) {
-            if (isset($params['name']) && $params['name'] === $arr['name']) {
-                $route = $route_pattern;
-            }
-        }
-
-        if (!isset($route)) {
-            return '#';
-        } else {
-            unset($arr['name']);
-            foreach($arr as $key => $value) {
-                $route = str_replace("(?P<$key>[^/]+)", $value, $route);
-            }
-
-            return $url_prefix . $route;
-        }
+        return route($arr);
     }
 
     function getUser()

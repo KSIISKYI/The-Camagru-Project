@@ -8,6 +8,6 @@ abstract class Middleware
     {
         header("HTTP/1.0 $status_code $error_message");
         echo $status_code . ' ' . $error_message;
-        die();
+        exit();
     }
 }

@@ -7,7 +7,7 @@ use PHPMailer\PHPMailer\{PHPMailer, Exception, SMTP};
 use App\Models\{User, PendingUser, RecoveryUser};
 use App\Core\View;
 
-require APP_ROOT . '/app/Core/funcs.php';
+require_once APP_ROOT . '/app/Core/funcs.php';
 
 class Service
 {
@@ -50,8 +50,7 @@ class Service
         $pending_user_model = new PendingUser;
         $pending_user_model->create([
             'token' => sha1(uniqid($username, true)),
-            'user_id' => $user['id'],
-            'tstamp' => $_SERVER['REQUEST_TIME']
+            'user_id' => $user['id']
         ]);
     }
 
@@ -108,8 +107,7 @@ class Service
         $recover_user_model = new RecoveryUser;
         $recover_user_model->create([
             'token' => sha1(uniqid($user_id, true)),
-            'user_id' => $user_id,
-            'tstamp' => $_SERVER['REQUEST_TIME']
+            'user_id' => $user_id
         ]);
     }
 
@@ -128,6 +126,16 @@ class Service
 
         $viem = new View;
         $body = $viem->render('auth/recoveryMail.twig', ['recovery_token' => self::getRecoveryToken($user['id'])]);
+
+        self::sendMail($user['email'], 'The Camagru', $body);
+    }
+
+    static function sendEmailNotification(string $edited_image_id, int $comment_id, $user)
+    {
+        $comment_link = 'http://localhost' . URL_ROOT . 'edited_images/' . $edited_image_id . '#comment_id' . $comment_id;
+
+        $viem = new View;
+        $body = $viem->render('email_notification.twig', ['comment_link' => $comment_link]);
 
         self::sendMail($user['email'], 'The Camagru', $body);
     }

@@ -1,0 +1,57 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="content__gallery">
+        <img src="http://localhost/The-Camagru-Project/public/img/edited_images/{{ image.name }}">
+
+        <div class="gallery_buttons">
+            <a href="http://localhost/The-Camagru-Project/public/img/edited_images/{{ image.name }}" download>
+                <button style="background-color: #3e933e;">Download</button>
+            </a>
+            {% if image.user_id == getUser().id %}
+                <p>
+                    <button id="delete_edited_image_btn" value="{{ image.name }}" style="background-color: #fb3c3c;">Remove</button>
+                </p>
+            {% endif %}
+        </div>
+
+        <div class="comment_list">
+            <form method="post" action="{{ route({'name':'comments.store'}) }}">
+                <textarea name="context" rows="3" style="width:100%;" placeholder="Enter a comment" required></textarea>
+                <input type="hidden" name="edited_image_id" value="{{ image.name }}">
+                <button type="submit">Comment</button>
+            </form>
+
+            {% for comment in comments %}
+                <div class="comment_item" id="comment_id{{comment.id}}">
+                    <div class="comment_header">
+                        <p>
+                        {% if comment.parent_id %}
+                        <a href="#comment_id{{comment.parent_id}}" style="color:#c40e0e;">Reply</a>, 
+                        {% endif %}
+                        {{ comment.user.user_name }}</p>
+                        <p>{{ comment.created_at }}</p>
+                        {% if getUser().id == comment.user_id %}
+                            <button class="delete_comment_btn" value="{{ comment.id }}">
+                                <img src="http://localhost/The-Camagru-Project/public/img/basket.png" style=" width:20px; height:auto;">
+                            </button>
+                        {% endif %}
+                    </div>
+                    <div class="comment_context">
+                        {{ comment.context }}
+                    </div>
+                    <div class="reply_comment">
+                        <button class="comment">Reply</button>
+                        <form method="post" action="{{ route({'name':'comments.store'}) }}" class="comment_form" id="comment{{ loop.index - 1 }}">
+                            <input type="hidden" name="parent_id" value="{{ comment.id }}">
+                            <input type="hidden" name="edited_image_id" value="{{ image.name }}">
+                            <textarea name="context" rows="3" placeholder="Enter a comment" required></textarea>
+                            <button type="submit">Comment</button>
+                        </form>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    
+{% endblock %}

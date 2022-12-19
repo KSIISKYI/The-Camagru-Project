@@ -1,0 +1,44 @@
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Email Notification</title>
+	<style type="text/css">
+		body {
+    		font-family: 'trebuchet ms';
+		}
+
+		.page {
+		    background-color: #F5FFFF;
+			padding: 20px;
+			width: 70%;
+		    margin: 0 auto;
+		}
+		button {
+		  background-color: #3485ae;
+		  color: white;
+		  padding: 14px 20px;
+		  margin: 8px 0;
+		  border: none;
+		  cursor: pointer;
+		  border-radius: 5px;
+		}
+
+		/* Add a hover effect for buttons */
+		button:hover {
+		  opacity: 0.8;
+		}
+	</style>
+</head>
+<body>
+	<div class="page">
+		<h1>Email Notification</h1>
+		<p>You received a comment on your photo. If you want to see the details of the comment, click on the button below.</p>
+		<form action="{{ comment_link }}" method="GET">
+			<button type="submit">Show Details</button>
+		</form>
+		<p>If you no longer want to receive email notifications, go to your <b>settings</b> and turn off the email notification option.</p>
+		<h3>Sincerely, Camagru Team</h3>
+	</div>
+</body>
+</html>

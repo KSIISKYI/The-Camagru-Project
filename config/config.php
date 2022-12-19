@@ -9,7 +9,7 @@ define('URL_ROOT', '/' . SITE_NAME . '/');
 define('URL_SUBFOLDER', '');
 
 //DB Params
-define('DB_HOST', 'your-host');
-define('DB_USER', 'your-username');
-define('DB_PASS', 'your-password');
-define('DB_NAME', 'your-db-name');
+define('DB_HOST', '127.0.0.1');
+define('DB_USER', 'root');
+define('DB_PASS', 'root');
+define('DB_NAME', 'Camagru');

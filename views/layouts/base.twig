@@ -6,10 +6,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The Camagru</title>
-    <link rel="stylesheet" href="public/css/normalize.css">
-    <link rel="stylesheet" href="public/css/style.css">
+    <link rel="stylesheet" href="http://localhost/The-Camagru-Project/public/css/normalize.css">
+    <link rel="stylesheet" href="http://localhost/The-Camagru-Project/public/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@500&display=swap" rel="stylesheet">
 
-    <script defer src="public/js/main.js"></script>
+    <script defer src="http://localhost/The-Camagru-Project/public/js/main.js"></script>
+    <script src="https://kit.fontawesome.com/600e38d2f0.js" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -21,7 +24,7 @@
                 <span></span><span></span><span></span>
             </button>
             <div class="header__item headerlogo headerButton">
-                <img src="public/img/logo_icon2.png" id="logo_icon">
+                <img src="http://localhost/The-Camagru-Project/public/img/logo_icon2.png" id="logo_icon">
                 <a class="menu__link" href="{{ route({'name':'home'}) }}" style="display: inline">
                     CAMAGRU
                 </a>
@@ -32,7 +35,7 @@
                 {% if getUser() %}
                     <li class="menu__item">
                         <div class="header__item headerButton">
-                            <a class="menu__link" href="#">
+                            <a class="menu__link" href="{{ route({'name':'edited_images.index'}) }}">
                                 GALLERY
                             </a> 
                         </div>

@@ -34,8 +34,7 @@ class RegisterController extends Controller
             $user_model->update($pending_user['user_id'], ['is_active' => True]);
             $pending_user_model->delete('token', $this->request->data["token"]);
             
-            header('Location: profile');
-            exit();
+            redirect(route(['name' => 'profile']));
         } else {
             echo 'BAD';
             exit();
