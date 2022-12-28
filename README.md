@@ -79,11 +79,11 @@ There are different effect images such as glasses, mustache, beard and other. Yo
 
 :large_blue_diamond:  [Resolving PHP relative path problem](http://yagudaev.com/posts/resolving-php-relative-path-problem/)
 
-:large_blue_diamond:  [Using AJAX in JS](https://developer.mozilla.org/ru/docs/Web/API/Fetch_API/Using_Fetch)
+:large_blue_diamond:  [Using AJAX in JS](https://developer.mozilla.org/en/docs/Web/API/Fetch_API/Using_Fetch)
 
 :large_blue_diamond:  [Safe Password Hashing](http://php.net/manual/en/faq.passwords.php)
 
 ## HOW TO CONTACT ME:
 
 If you found mistake || bug || have any questions || suggestions, please feel free to contact me at
-agalavan@student.unit.ua
+oleksiyyy882@gmail.com
