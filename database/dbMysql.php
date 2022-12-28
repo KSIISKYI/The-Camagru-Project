@@ -64,25 +64,6 @@ $dbh->query('CREATE TABLE Camagru.image_effects (
     name CHAR(100) PRIMARY KEY
 );');
 
-$dbh->query('INSERT INTO Camagru.users(user_name, email, is_active, password) VALUES(
-    "Oleksii", "oleksiyyy882@gmail.com", 1, "$2y$10\$zwX2A7cHuhOSo6mSZvwJtOvsYSDSUTtxmd8M9bgzgqlEJKfGoRmxm"
-);');
-   
-// $dbh->query('INSERT INTO Camagru.edited_images(name, user_id) VALUES
-// ("photo.jpg", 1),
-// ("photo1.jpg", 1),
-// ("photo2.jpg", 1),
-// ("photo3.jpg", 1),
-// ("photo4.jpg", 1),
-// ("photo5.jpg", 1),
-// ("photo6.jpg", 1),
-// ("photo7.jpg", 1),
-// ("photo8.jpg", 1),
-// ("photo9.jpg", 1),
-// ("photo10.jpg", 1),
-// ("photo11.jpg", 1)
-// ;');
-
 $dbh->query('INSERT INTO Camagru.image_effects(name) VALUES
 ("effects/effect1.png"),
 ("effects/effect2.png"),

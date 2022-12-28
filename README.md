@@ -10,13 +10,13 @@ There are different effect images such as glasses, mustache, beard and other. Yo
 
 **Please find subject with full description :point_right: [here](camagru.en.pdf) :point_left:.**
 
-<img src="screenshots/screen2.png">
+<img src="screenshots/screenshot1.png">
 
-<img src="screenshots/screen3.png">
+<img src="screenshots/screenshot2.png">
 
-<img src="screenshots/screen4.png">
+<img src="screenshots/screenshot3.png">
 
-<img src="screenshots/screen1.png">
+<img src="screenshots/screenshot3.png">
 
 ## DESCRIPTION OF MY IMPLEMENTATION:
 
