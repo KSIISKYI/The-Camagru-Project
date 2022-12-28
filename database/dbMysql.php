@@ -32,6 +32,7 @@ $dbh->query('CREATE TABLE Camagru.recovery_users (
 
 $dbh->query('CREATE TABLE Camagru.edited_images (
     name CHAR(40) NOT NULL,
+    path CHAR(100) NOT NULL,
     user_id INT NOT NULL,
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     PRIMARY KEY(name),
@@ -58,4 +59,42 @@ $dbh->query('CREATE TABLE Camagru.likes (
     CONSTRAINT likes_users_fk FOREIGN KEY (user_id) REFERENCES Camagru.users(id) ON DELETE CASCADE,
     CONSTRAINT edited_image_id_user_id_unique UNIQUE(user_id, edited_image_id)
 );');
+
+$dbh->query('CREATE TABLE Camagru.image_effects (
+    name CHAR(100) PRIMARY KEY
+);');
+
+$dbh->query('INSERT INTO Camagru.users(user_name, email, is_active, password) VALUES(
+    "Oleksii", "oleksiyyy882@gmail.com", 1, "$2y$10\$zwX2A7cHuhOSo6mSZvwJtOvsYSDSUTtxmd8M9bgzgqlEJKfGoRmxm"
+);');
    
+// $dbh->query('INSERT INTO Camagru.edited_images(name, user_id) VALUES
+// ("photo.jpg", 1),
+// ("photo1.jpg", 1),
+// ("photo2.jpg", 1),
+// ("photo3.jpg", 1),
+// ("photo4.jpg", 1),
+// ("photo5.jpg", 1),
+// ("photo6.jpg", 1),
+// ("photo7.jpg", 1),
+// ("photo8.jpg", 1),
+// ("photo9.jpg", 1),
+// ("photo10.jpg", 1),
+// ("photo11.jpg", 1)
+// ;');
+
+$dbh->query('INSERT INTO Camagru.image_effects(name) VALUES
+("effects/effect1.png"),
+("effects/effect2.png"),
+("effects/effect3.png"),
+("effects/effect4.png"),
+("effects/effect5.png"),
+("effects/effect6.png"),
+("effects/effect7.png"),
+("effects/effect8.png"),
+("effects/effect9.png"),
+("effects/effect10.png"),
+("effects/effect11.png"),
+("effects/effect12.png"),
+("effects/effect13.png")
+;');

@@ -6,8 +6,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
 const comment_buttons = document.body.querySelectorAll(".comment");
 
-console.log(comment_buttons)
-
 for (let i = 0; i < comment_buttons.length; i++) {
     comment_buttons[i].addEventListener("click", function() {
         document.querySelector(`#comment${i}`).classList.toggle("open_comment_form");
@@ -44,11 +42,11 @@ for (let i = 0; i < delete_edited_image_btns.length; i++) {
         let response = fetch(`http://localhost/The-Camagru-Project/edited_images/${delete_edited_image_btns[i].value}`, {
 		    method: 'DELETE',
         });
-        window.location.replace(`http://localhost/The-Camagru-Project/edited_images`);
+        window.location.replace(window.location.href);
     })
 }
 
-
+ 
 const liked = document.body.querySelectorAll('.liked');
 
 for (let i = 0; i < liked.length; i++) {
@@ -56,7 +54,7 @@ for (let i = 0; i < liked.length; i++) {
         let response = fetch(`http://localhost/The-Camagru-Project/likes/${liked[i].value}`, {
 		    method: 'DELETE',
         });
-        window.location.replace(`http://localhost/The-Camagru-Project/edited_images`);
+        window.location.replace(window.location.href);
     })
 }
 
@@ -66,6 +64,23 @@ for (let i = 0; i < comments.length; i++) {
     comments[i].addEventListener('click', function () {
         fetch(`http://localhost/The-Camagru-Project/comments/${comments[i].value}`, {
 		    method: 'DELETE',
-        }).then(res => res.text()).then(res => window.location.replace(res));
+        });
+        window.location.replace(window.location.href);
     })
 }
+
+const likeForms = document.body.querySelectorAll('.like_form');
+
+for (let i = 0; i < likeForms.length; i++) {
+    likeForms[i].addEventListener('submit', e => {
+        e.preventDefault();
+		let formData = new FormData(e.target)
+		let data =  new URLSearchParams(formData);
+        fetch(`http://localhost/The-Camagru-Project/likes`, {
+		    method: 'POST',
+            body: data,
+        });
+        window.location.replace(window.location.href);
+    })
+}
+

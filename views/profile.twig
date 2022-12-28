@@ -1,5 +1,132 @@
 {% extends 'layouts/base.twig' %}
 
 {% block content %}
-    <h1>Profile {{ getUser().user_name }}</h1>
+<div class="profile_content">
+    <div class="user_canvas">
+        <div class="div_selection" id="div_selection">
+            <button onClick="streamCam()">Turn on Camera</button>
+            <form id="formImgForCanvas">
+            <p style="width:100%;margin:10px;font-size:20px;color:#595959;">Select image to upload:</p>
+                <input id="input_img" type="file" name="img" accept="image/*" required>
+                <button>Upload Image</button>
+            </form>
+        </div>
+        <video id="webCam" class="close"></video>
+        <canvas id="canvas" class="close"></canvas>
+        <div class="user_canvas_btns">
+            <button onClick="decrease()"><i class="fa-solid fa-minus"></i></button>
+            <button onClick="increase()"><i class="fa-solid fa-plus"></i></button>
+            <button onClick="rotateLeft()"><i class="fa-solid fa-rotate-left"></i></button>
+			<button onClick="rotateRight()"><i class="fa-solid fa-rotate-right"></i></button>
+        </div>
+        <div class="user_canvas_btns">
+            <button onClick="cancelEffect()"><i class="fa-solid fa-delete-left"></i></button>
+            <button onClick="startWebcam()"><i class="fa-solid fa-camera-rotate"></i></i></button>
+            {# <form method="POST" id="save_img_form" style="margin-right:10px;">
+                <input type="hidden" name="img_base64">
+                <button onClick=""><i class="fa-regular fa-floppy-disk"></i></button>
+            </form> #}
+            <button onClick="saveImg()"><i class="fa-regular fa-floppy-disk"></i></button>
+            <button onClick="takeAPicture()"><i class="fa-solid fa-camera"></i></button>
+        </div>
+            <div class="img_collections">
+                {% for image_effect in images_effects %}
+                <label>
+                    <input type="radio" value="http://localhost/The-Camagru-Project/public/img/{{ image_effect.name }}" id="choice1" name="rb">
+                    <img src="http://localhost/The-Camagru-Project/public/img/{{ image_effect.name }}" class="effect_img">
+			    </label>
+                {% endfor %}
+            </div>
+        </div>
+
+        <div class="gallery_list_demo">
+            <div class="gallery_list_demo_inner">
+                {% if not images %}
+                    <p style="color:#989696; font-size:15px">
+                        You haven't taken any pictures yet
+                    </p>
+                {% endif %}
+
+                {% for image in images %}
+
+                {% set is_liked = false %}
+                {% set like_id = '' %}
+
+                <div class="galery__item" style="max-width:730px;flex:none;">
+                    <div class="galery__item__header">
+                        <p>You</p>
+                        <p>{{ image.created_at|date("Y-m-d") }}</p>
+                        {% if getUser().id == image.user_id %}
+                            <button class="delete_edited_image_btn_demo" value="{{ image.name }}">
+                                <img src="http://localhost/The-Camagru-Project/public/img/basket.png" style=" width:20px; height:auto;">
+                            </button>
+                        {% endif %}
+                    </div>
+                    <a href="{{ route({'name':'edited_images.show', 'edited_image_id':image.name}) }}">
+                        <div class="galery__item__hover">Show</div>
+                        <img src="http://localhost/The-Camagru-Project/public/img/{{ image.path }}">  
+                    </a>
+                    <div class="galery__item__footer">
+                        <div>
+                            {% for like in image.likes %}
+                                {% if like.user_id == getUser().id %}
+                                    {% set is_liked = true %}
+                                    {% set like_id = like.id %}
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if image.likes|length > 0 %}
+                                {{ image.likes|length }}
+                            {% endif%}
+                            
+                            {% if is_liked %}
+                            <button class="liked" value='{{ like_id }}'>
+                                <i class="fa-solid fa-heart" style='color:#c80404'></i>
+                            </button>
+                                
+                            {% else %}
+                                <form method="POST" class="like_form">
+                                    <input type="hidden" name="edited_image_id" value={{ image.name }}>
+                                    <button class="not_liked" type="submit">
+                                        <i class="fa-regular fa-heart"></i>
+                                    </button>
+                                </form>
+                            {% endif %}
+                            </div>
+
+                        <div>
+                            {{ image.comments|length }}
+                            <i class="fa-solid fa-comment"></i>
+                        </div>
+                        
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            {# pagination #}
+            {% if page_obj.has_other_pages %}
+            <div class="pgn">
+                {% if page_obj.has_previous and  page_obj.previous_page_number != 1 %}
+                    <a href="{{ route({'name':'profile'}) }}?page=1"><div class="pgn__cell"><<</div></a>
+                {% endif %}
+
+                {% if page_obj.has_previous %}
+                    <a href="{{ route({'name':'profile'}) }}?page={{ page_obj.previous_page_number }}"><div class="pgn__cell"><</div></a>
+                {% endif %}
+                
+                <div class="pgn__cell pgn__cell_press">{{ page_obj.current_page_number }}</div>
+
+                {% if page_obj.has_next %}
+                    <a href="{{ route({'name':'profile'}) }}?page={{ page_obj.next_page_number }}"><div class="pgn__cell">></div></a>
+                {% endif %}
+
+                {% if page_obj.has_next and  page_obj.next_page_number != page_obj.last_page_number %}
+                    <a href="{{ route({'name':'profile'}) }}?page={{ page_obj.last_page_number }}"><div class="pgn__cell">>></div></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
 {% endblock %}
