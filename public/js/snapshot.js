@@ -277,10 +277,10 @@ function __drawEffectImages() {
         let image = new Image();
         image.src = effect_image.img_src;
 
-        context.translate(effect_image.x - effect_image.width / 2, effect_image.y - effect_image.height / 2);
+        context.translate(effect_image.x, effect_image.y);
         context.rotate(effect_image.angleToRad);
-        context.drawImage(image, 0, 0, effect_image.width, effect_image.height);
+        context.drawImage(image, 0  - effect_image.width / 2, 0 - effect_image.height / 2, effect_image.width, effect_image.height);
         context.rotate(-effect_image.angleToRad);
-        context.translate(-(effect_image.x - effect_image.width / 2), -(effect_image.y - effect_image.height / 2));
+        context.translate(-(effect_image.x), -(effect_image.y));
     }
 }

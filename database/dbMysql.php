@@ -1,6 +1,6 @@
 <?php
 
-require_once '../config/config.php';
+require_once 'config/config.php';
 
 $dbh = new PDO("mysql:host=" . DB_HOST, DB_USER, DB_PASS);
 $dbh->query('DROP DATABASE ' . DB_NAME);

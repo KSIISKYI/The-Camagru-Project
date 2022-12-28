@@ -1,4 +1,4 @@
 /vendor
 composer.lock
 database/database.sqlite
-public/img/edited_images/
+public/img/edited_images/*
