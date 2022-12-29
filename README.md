@@ -63,9 +63,21 @@ There are different effect images such as glasses, mustache, beard and other. Yo
 :large_orange_diamond:  add pagination.
 
 ### Installation:
- - "composer install"
- - in the config/config.php file, add the MySQL connection settings
- - "php database/dbMySQL.php"
+1. Clone the repository
+```
+https://github.com/KSIISKYI/The-Camagru-Project.git
+```
+
+2. Install composer 
+```
+composer install
+```
+3. In the config/config.php file, add the MySQL connection settings 
+4. Run this project on port 80 in the root of the local http server
+5. Run migration 
+```
+php database/dbMySQL.php
+```
 
 ## USEFUL LINKS:
 
