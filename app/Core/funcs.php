@@ -23,6 +23,42 @@ function checkPassword($password, $confirm_password)
     return $errors;
 }
 
+function addWatermark(string $filename)
+{
+    $img = imagecreatefromjpeg(APP_ROOT . '/public/img/edited_images/' . $filename);
+    $logo = imagecreatefrompng(APP_ROOT . '/public/img/logo_icon.png');
+    $logo_w = getimagesize(APP_ROOT . '/public/img/edited_images/' . $filename)[0] / 15;
+    $logo_h = getimagesize(APP_ROOT . '/public/img/edited_images/' . $filename)[1] / 15;
+
+    imagecopyresampled(
+        $img,
+        $logo,
+        (getimagesize(APP_ROOT . '/public/img/edited_images/' . $filename)[0] - $logo_w) - 10,
+        (getimagesize(APP_ROOT . '/public/img/edited_images/' . $filename)[1] - $logo_h) - 10,
+        0,
+        0,
+        $logo_w,
+        $logo_h,
+        getimagesize(APP_ROOT . '/public/img/logo_icon.png')[0],
+        getimagesize(APP_ROOT . '/public/img/logo_icon.png')[1],
+    );
+
+    imagejpeg($img, APP_ROOT . '/public/img/edited_images/' . $filename);
+	imagedestroy($img);
+}
+
+function saveImg(string $data_base64)
+{
+    $data = base64_decode($data_base64);
+    $file_name = time() . '.jpeg';
+    $file_path = 'edited_images/' . $file_name;
+    file_put_contents(APP_ROOT . '/public/img/' . $file_path, $data);
+    
+    addWatermark($file_name);
+    
+    return compact('file_name', 'file_path');
+}
+
 function route($arr)
 {
     $routes = require APP_ROOT . '/routes/web.php';

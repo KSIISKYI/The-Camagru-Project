@@ -31,6 +31,7 @@ return [
 
     // GALLERY
     new Route('edited_images', 'EditedPhotoController', 'index', 'GET', 'edited_images.index', ['Authenticate']),
+    new Route('edited_images', 'EditedPhotoController', 'store', 'POST', 'edited_images.store', ['Authenticate']),
     new Route('edited_images\/(?P<edited_image_id>[^\/]+)', 'EditedPhotoController', 'destroy', 'DELETE', 'edited_images.destroy', ['Authenticate', 'IsCreator']),
     new Route('edited_images\/(?P<edited_image_id>[^\/]+)', 'EditedPhotoController', 'show', 'GET', 'edited_images.show', ['Authenticate']),
 

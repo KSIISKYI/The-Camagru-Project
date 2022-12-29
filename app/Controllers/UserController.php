@@ -2,8 +2,8 @@
 
 namespace App\Controllers;
 
-use App\Models\{User, RecoveryUser};
-use App\Core\Controller;
+use App\Models\{EditedImage, User, RecoveryUser, ImageEffect};
+use App\Core\{Controller, Paginator};
 
 class UserController extends Controller
 {
@@ -61,7 +61,16 @@ class UserController extends Controller
 
     function profile()
     {
-        return $this->view->render('profile.twig');
+        $edited_image_model = new EditedImage;
+        $image_effects_model = new ImageEffect;
+        $pgn = new Paginator($edited_image_model->filter(['user_id' => $_SESSION['user_id']]), 2);
+
+        $page_number = isset($this->request->data['page']) ? $this->request->data['page'] : 1;
+        $images = $pgn->getData($page_number);
+        $page_obj = $pgn->getPageObj($page_number);
+        $image_effects = $image_effects_model->filter();
+
+        return $this->view->render('profile.twig', ['images' => $images, 'page_obj' => $page_obj, 'images_effects' => $image_effects]);
     }
 
     function getSettingProfile()

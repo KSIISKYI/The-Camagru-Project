@@ -35,10 +35,7 @@ class CommentController extends Controller
     {
         $comment_model = new Comment;
 
-        $img = $comment_model->get('id', $arr['comment_id'])['edited_image_id'];
+        $comment_model->get('id', $arr['comment_id'])['edited_image_id'];
         $comment_model->delete('id', $arr['comment_id']);
-
-        echo route(['name' => 'edited_images.show', 'edited_image_id' => $img]);
-        exit();
     }
 }

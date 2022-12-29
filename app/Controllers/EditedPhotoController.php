@@ -10,7 +10,7 @@ class EditedPhotoController extends Controller
     function index()
     {   
         $edited_image_model = new EditedImage;
-        $pgn = new Paginator($edited_image_model->filter(), 6);
+        $pgn = new Paginator($edited_image_model->filter(), 4);
 
         $page_number = isset($this->request->data['page']) ? $this->request->data['page'] : 1;
 
@@ -19,6 +19,13 @@ class EditedPhotoController extends Controller
         
 
         return $this->view->render('edited_image/index.twig', ['images' => $images, 'page_obj' => $page_obj]);
+    }
+
+    function store()
+    {
+        $edited_image_model = new EditedImage;
+        $img = saveImg($this->request->data['img_base64']);
+        $edited_image_model->create(['name' => $img['file_name'], 'path' =>  $img['file_path'], 'user_id' => $this->request->user['id']]);
     }
 
     function show(array $arr)

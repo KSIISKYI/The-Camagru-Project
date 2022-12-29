@@ -22,7 +22,7 @@
             </div>
             <a href="{{ route({'name':'edited_images.show', 'edited_image_id':image.name}) }}">
                 <div class="galery__item__hover">Show</div>
-                <img src="http://localhost/The-Camagru-Project/public/img/edited_images/{{ image.name }}">  
+                <img src="http://localhost/The-Camagru-Project/public/img/{{ image.path }}">  
             </a>
             <div class="galery__item__footer">
                 <div>
@@ -43,7 +43,7 @@
                     </button>
                         
                     {% else %}
-                        <form method="POST" action="{{ route({'name': 'likes.store'}) }}">
+                        <form method="POST" class="like_form">
                             <input type="hidden" value={{ image.name }} name="edited_image_id">
                             <button class="not_liked">
                                 <i class="fa-regular fa-heart"></i>

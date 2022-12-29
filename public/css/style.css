@@ -196,7 +196,6 @@ body {
     padding: 25px;
     display: flex;
     flex-direction: column;
-    /* justify-content: space-between; */
     min-height: 85vh;
 }
 
@@ -278,28 +277,44 @@ span.psw {
     width: 100%;
   }
 }
+/* ================ HOME PAGE =============== */
+
+.welcome {
+    font-size: 20px;
+    padding-right: 20px;
+}
+
+@media (max-width: 992px) {
+    .welcome {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-bottom: 30px;
+    }
+    .welcome * {
+        text-align: center;
+    }
+}
 
 /* ================ GALERY ================  */
 
-.gallery__content {
+.content__gallery {
     display: flex;
+    max-width: 900px;
     flex-direction: column;
-    justify-content: space-between;
-    min-height: 80vh;
+    margin: 0 auto;
 }
 
 .galery__list {
     overflow: hidden;
     display: flex;
-    flex-wrap: wrap;
-    justify-content:center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .galery__item {
-    flex: 25%;
     overflow: hidden;
-    min-width: 300px;
-    max-width: 363px;
+    max-width: 800px;
     margin: 10px;
     background-color: #8cbbd3;
     border-radius: 5px;
@@ -495,4 +510,177 @@ span.psw {
 
 .open_comment_form {
     display: flex;
+}
+
+/* ============= PROFILE =============  */
+
+.close {
+    display: none;
+}
+
+.op {
+    display: flex;
+}
+
+.profile_content {
+    display: flex;
+    width: 100%;
+    margin: 0 auto;
+}
+
+.div_selection {
+	width: 100%;
+    height: 500px;
+	background-color: rgb(140 188 211);
+	border: 3px solid #3485ae;
+    border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+.div_selection button {
+    width: 369px;
+    margin-bottom: 30px;
+}
+
+.div_selection form {
+    display: flex;
+    flex-direction: column;
+    background-color: #ebfbff;
+    border: 1px solid #3485ae;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.div_selection form input {
+    padding: 10px;
+    align-items: center;
+}
+
+.div_selection form button {
+    width: 100%;
+}
+
+
+.user_canvas {
+    display: flex;
+    width: 70%;
+    flex-direction: column;
+}
+
+video {
+    background-color: #c0c0c0;
+    border: 5px solid #3485ae;
+    border-radius: 5px;
+}
+
+.user_canvas_btns {
+    display: flex;
+    margin: 10px 0;
+}
+
+.user_canvas_btns:last-child {
+    margin-top: 0;
+}
+
+.user_canvas_btns button {
+    background-color: white;
+    border: 1px solid #3485ae;
+    font-size: 20px;
+    color: #3485ae;
+    margin: 5px;
+}
+
+canvas {
+    display: none;
+    height: auto;
+    width: 100%;
+    background-color: #ccc;
+    border: 5px solid #3485ae;
+    border-radius: 5px;
+}
+
+.img_collection {
+    width: 100%;
+    margin-bottom: 10px;
+    height: 200px;
+}
+
+.gallery_list_demo {
+    display: flex;
+    flex-direction: column;
+    width: 30%;
+    min-height: 85vh;
+    margin-left: 10px;
+}
+
+.gallery_list_demo_inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.gallery_list_demo div .galery__item:nth-child(1) {
+    margin-top: 0;
+}
+
+.img_collections {
+	width: 100%;
+    height: 200px;
+	padding: 10px;
+	background-color: white;
+	margin: 10px 0;
+    overflow: scroll;
+    border: 1px solid #3485ae;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+input[type="radio"] {
+    position: fixed;
+    left: -100px;
+    top: -100px;
+    opacity: 0;
+  }
+  
+.effect_img {
+    width: 170px;
+    height: auto;
+    padding: 5px;
+    
+    cursor: pointer;
+}
+
+.selected_effect {
+    border: 3px solid #3485ae;
+    border-radius: 3px;
+    background-color: #ddf0fa;
+}
+
+@media (max-width: 1200px) {
+    .profile_content {
+        flex-direction: column;
+        width: 80%;
+    }
+
+    .gallery_list_demo {
+        margin: 0;
+        width: 100%;
+        min-height: auto;
+    }
+
+    .img_collections {
+        margin-bottom: 30px;
+    }
+
+    .user_canvas {
+        width: 100%;
+    }
 }
