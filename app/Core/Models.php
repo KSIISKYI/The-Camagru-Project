@@ -4,7 +4,6 @@ namespace App\Core;
 
 use PDO;
 
-
 abstract class Models
 {
     protected $db;
@@ -18,13 +17,14 @@ abstract class Models
         }
     }
 
-    //get record by 'id' filed
-    function get(int $id)
+    //get record by $field filed
+    function get($field, $value)
     {
-        $pr = $this->db->prepare('SELECT * FROM '. $this->table.  ' WHERE id = :id');
-        $pr->execute(['id' => $id]);
-         
-        return $pr->fetchAll(PDO::FETCH_ASSOC)[0];
+        $pr = $this->db->prepare('SELECT * FROM ' . $this->table . ' WHERE ' . $field . ' = ?');
+        $pr->execute([$value]);
+        $data = $pr->fetch(PDO::FETCH_ASSOC);
+
+        return $data;
     }
 
     //filter records by filters
@@ -80,10 +80,10 @@ abstract class Models
     }
 
     //delete record by id filed
-    function delete(int $id) {
-        $query = 'DELETE FROM ' . $this->table . ' WHERE id = ' . $id;
+    function delete($field, $value) {
+        if (gettype($value) == 'string') $value = "'$value'";
 
+        $query = "DELETE FROM $this->table WHERE $field = $value";
         $this->db->query($query);
     }
 }
-

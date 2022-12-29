@@ -1,0 +1,30 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="content__inner">
+        <div style="font-size:20px;">
+            <h1>Welcome &#128075;</h1>
+            <p>Camagru is small Instagram-like website allowing you to create and share photo-montages</p>
+            <p>Simply make photo, add funny effects and leave your footprint &#128062; in history.</p>
+            <h3>Enjoy!!! &#129505; &#128540;</h3>
+        </div>
+        <div class="form">
+            <form action="{{ route({'name':'signin'}) }}" method="post">
+                <h1>Quick Sign In</h1>
+
+                <div class="container">
+                    <label for="email"><b>Email</b></label>
+                    <input type="text" placeholder="Enter Email" name="email" required>
+
+                    <label for="password"><b>Password</b></label>
+                    <input type="password" placeholder="Enter Password" name="password" required>
+
+                    <button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Sign In</button>
+                </div>
+                {% if form_message %}
+                    <p style="color: red">{{ form_message }}</p>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+{% endblock %}

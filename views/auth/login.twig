@@ -1,0 +1,30 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+
+<div class="form">
+	<form action="{{ route({'name':'signin'}) }}" method="post">
+	    <h1>Sign In</h1>
+
+		<div class="container">
+			<label for="email"><b>Email</b></label>
+			<input type="text" placeholder="Enter Email" name="email" required>
+
+			<label for="password"><b>Password</b></label>
+		    <input type="password" placeholder="Enter Password" name="password" required>
+
+			<button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Sign In</button>
+		    <br>
+			<br>
+		    <a class="color_form" href="{{ route({'name':'recovery_email'}) }}">Forgot Password?</a>
+		</div>
+		{% if form_message %}
+            <p style="color: red">{{ form_message }}</p>
+        {% endif %}
+	</form>
+</div>
+<div class="form new_acc">
+	<a class="color_form" href="{{ route({'name':'register'}) }}">New at Camangry? Create an account</a>
+</div>
+
+{% endblock %}

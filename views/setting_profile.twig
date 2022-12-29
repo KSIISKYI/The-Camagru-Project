@@ -1,0 +1,42 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+    <div class="form">
+        <form action="{{ route({'name':'update_settings'}) }}" method="post">
+            <h1>Edit Your Profile</h1>
+
+            <div class="container">
+                <label for="user_name"><b>Username</b></label>
+                <input type="text" placeholder="Enter Username" name="user_name" value="{{ user.user_name }}" required>
+
+                <label for="email"><b>Email</b></label>
+                <input type="text" placeholder="Enter Email" name="email" value="{{ user.email }}" required>
+
+                <div style="display: flex; justify-content: space-between; margin-top: 30px;">
+                    <label for="old_password"><b>Old Password</b></label>
+                    <a class="color_form" href="{{ route({'name':'send_recovery_mail'}) }}?email={{ user.email }}">I Forgot My Password</a>
+                </div>
+                <input type="password" placeholder="Enter Old Password" name="old_password">
+
+                <label for="new_password"><b>New Password</b></label>
+                <input type="password" placeholder="Enter New Password" name="new_password">
+
+                <label for="confirm_new_password"><b>Confirm New Password</b></label>
+                <input type="password" placeholder="Enter Confirm New Password" name="confirm_new_password">
+
+                <div style="display: flex; margin: 10px 0;">
+                    <input type="checkbox" style="margin-right: 20px; width: 30px; accent-color: #3485ae" name="is_notificate" {% if user.is_notificate %} checked {% endif %}>
+                    <label for="is_notificate">Do you have to receive email notification when someone comments on your photo?</label>
+                </div>
+
+                <button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Update Profile</button>
+
+            </div>
+            {% if form_messages %}
+                {% for message in form_messages %}
+                    <p style="color: red">{{ message }}</p>
+                {% endfor %}
+            {% endif %}
+        </form>
+    </div>
+{% endblock %}
