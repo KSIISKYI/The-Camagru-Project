@@ -9,16 +9,18 @@
 		<div class="container">
             <input type="hidden" value="{{ recovery_token }}" name="token">
 
-			<label for="password"><b>Password</b></label>
+			<label for="password"><b>New Password</b></label>
             <input type="password" placeholder="Enter Password" name="password" required>
 
-            <label for="uname"><b>Confirm Password</b></label>
+            <label for="uname"><b>Confirm New Password</b></label>
             <input type="password" placeholder="Enter Confirm Password" name="confirm_password" required>
 
             <button type="submit" style="font-size: 17px; font-family: 'trebuchet ms';font-weight: bold;">Reset Password</button>
 		</div>
-		{% if form_message %}
-            <p style="color: red">{{ form_message }}</p>
+		{% if form_messages %}
+            {% for error in form_messages %}
+                <p style="color: red">{{ error }}</p>
+            {% endfor %}
         {% endif %}
 	</form>
 </div>

@@ -7,12 +7,14 @@ class Router
     protected $routes = [];
     protected $params = [];
     protected $request;
+    protected $matches;
 
     function __construct($request)
     {
         $routes = require APP_ROOT.'/routes/web.php';
-        foreach($routes as $route => $params) {
-            $this->routes["#^$route$#"] = $params;
+
+        foreach($routes as $route) {
+            $this->routes = $routes;
             $this->request = $request;
         }
     }
@@ -20,43 +22,63 @@ class Router
     function match()
     {
         $url = $_REQUEST['route'];
-        foreach($this->routes as $route => $params) {
-            if (preg_match($route, $url, $matches)) {
-                $this->params = $params;
-                return true;
+        $matched_routes = [];
+
+        foreach($this->routes as $route) {
+            if (preg_match("#^$route->route$#", $url, $matches)) {
+                $matched_routes[] = $route;
+                $this->matches = $matches;
             }
         }
-        return false;
+        
+        return $matched_routes;
     }
 
     function run()
     {
-        if ($this->match()) {
-            $controller_path = 'App\Controllers\\' . $this->params['controller'];
+        if ($matched_routes = $this->match()) {
+            $matched_route = null;
 
-            //If method not allowed
-            if ($_SERVER['REQUEST_METHOD'] !== $this->params['http_method']) {
+            foreach($matched_routes as $route) {
+                if ($route->http_method === $_SERVER['REQUEST_METHOD']) {
+                    $matched_route = $route;
+                }
+            }
+
+            if (!isset($matched_route)) {
                 header("HTTP/1.0 405 Method Not Allowed");
                 echo '405 Method Not Allowed';
-                die();
-            } elseif (class_exists($controller_path)) {
-                $action = $this->params['action'];
-                if (method_exists($controller_path, $action)) {
-                    
-                    foreach($this->params['middleware'] as $middleware) {
-                        $middleware_path = 'App\Middleware\\' . $middleware;
-                        $middleware = new $middleware_path;
-                        $this->request =  $middleware->handle($this->request);
-                    }
-
-                    $controller = new $controller_path($this->request);
-                    echo $controller->$action();
-                } else {
-                    echo "Не найден метод: <b>$$action</b> в контроллере: <b>$controller_path</b>";
-                }
+                die(); 
             } else {
-                echo "Не найден контроллер: <b>$$controller_path</b>"; 
+                $this->request->matches = $this->matches;
+
+                $controller_path = 'App\Controllers\\' . $matched_route->controller;
+
+                if (class_exists($controller_path)) {
+                    $action = $matched_route->action;
+
+                    if (method_exists($controller_path, $action)) {
+                        foreach($matched_route->middleware as $middleware) {
+                            $middleware_path = 'App\Middleware\\' . $middleware;
+                            $middleware = new $middleware_path;
+                            $this->request =  $middleware->handle($this->request);
+                        }
+
+                        $controller = new $controller_path($this->request);
+
+                        if ($this->matches) {
+                            echo $controller->$action($this->matches);
+                        } else {
+                            echo $controller->$action(); 
+                        }
+                    } else {
+                        die("Не найден метод: <b>$action</b> в контроллере: <b>$controller_path");
+                    }
+                } else {
+                    die("Не найден контроллер: <b>$$controller_path</b>");
+                }
             }
+
         } else {
             header("HTTP/1.0 404 Not Found");
             require  APP_ROOT . '/public/html_exceptions/404.html';

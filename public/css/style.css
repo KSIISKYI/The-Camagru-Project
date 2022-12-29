@@ -25,7 +25,7 @@ img {
 }
 
 body {
-    font-family: 'trebuchet ms';
+    font-family: 'Quicksand', sans-serif;
 }
 
 .page {
@@ -183,15 +183,26 @@ body {
     .content__inner {
         flex-direction: column;
     }
+    .galery__item:nth-child(1) a{
+        position: static;
+    }
 
+    .galery__item:nth-child(1) .galery__item__hover {
+        display: none;
+    }
 }
 
 .content {
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    min-height: 85vh;
 }
 
 .content__inner {
     display:flex;
+    justify-content: center;
 }
 
 .form {
@@ -266,4 +277,222 @@ span.psw {
   .cancelbtn {
     width: 100%;
   }
+}
+
+/* ================ GALERY ================  */
+
+.gallery__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 80vh;
+}
+
+.galery__list {
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content:center;
+}
+
+.galery__item {
+    flex: 25%;
+    overflow: hidden;
+    min-width: 300px;
+    max-width: 363px;
+    margin: 10px;
+    background-color: #8cbbd3;
+    border-radius: 5px;
+}
+
+.galery__item a {
+    display: block;
+    position: relative;
+    font-size: 0;
+}
+
+.galery__item__hover {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, .7);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    opacity: 0;
+    transition: opacity .5s ease;
+} 
+
+.galery__item a:hover .galery__item__hover {
+    opacity: 1;
+}
+
+.galery__item img {
+    max-width: 100%;
+    height: auto;
+}
+
+.galery__item__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+}
+
+.galery__item__header img {
+    width: 20px;
+    height: auto;
+}
+
+.gallery_buttons {
+    display: flex;
+    flex-direction: row;
+}
+
+.gallery_buttons a, .gallery_buttons p  {
+    width: 50%;
+    margin: 10px;
+}
+
+.delete_edited_image_btn_demo, .delete_comment_btn {
+    display: inline-block;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    background: none;
+}
+
+.galery__item__footer {
+    padding: 5px 15px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.galery__item__footer div {
+    font-size: 20px;
+    display: inline;
+    color: black;
+}
+
+.galery__item__footer div button {
+    background: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+    width: auto;
+}
+
+.galery__item__footer div form {
+    display: inline-block;
+}
+
+
+
+/* ================ PAGINATION ================  */
+
+.pgn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px;
+}
+
+.pgn__cell {
+    background-color: #3485ae;
+    margin: 0 10px;
+    padding: 7px 15px;
+    border-radius: 3px;
+    color: #ebfbff;
+    transition: .3s;
+}
+
+.pgn__cell_press {
+    opacity: 0.7;
+}
+
+.pgn a:hover .pgn__cell{
+    opacity: 0.7;
+}
+
+/* ============== COMMENTS ============== */
+
+@keyframes select{
+    0%{
+      background:#2cd384;
+    }
+  }
+  @-webkit-keyframes select{
+    0%{
+      background: #2cd384;
+    }
+  }
+  .comment_item:target{
+    animation:select 1.5s linear;
+    -webkit-animation:select 1.5s linear;
+  }
+
+.comment_list {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.comment_item {
+    /*padding: 10px;*/
+    margin: 10px 0;
+    border: 1px solid #3485ae;
+    border-radius: 5px;
+    background-color: white;
+}
+
+.comment_header {
+    background-color: #8cbbd3;
+    padding: 5px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment_header p {
+    margin: 0;
+}
+
+.comment_context {
+    padding: 10px;
+}
+
+.reply_comment  {
+    padding: 10px;
+}
+
+
+.comment_form {
+    display: none;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.comment_form textarea {
+    background: transparent;
+    resize: none;
+    overflow: auto;
+}
+
+.comment_form * {
+    margin-top: 15px;
+}
+
+
+.reply_comment button {
+    width: 100px;
+    padding: 5px 5px;
+}
+
+.open_comment_form {
+    display: flex;
 }

@@ -1,102 +1,44 @@
 <?php
 
+use App\Core\Route;
+
 return [
-    'register' => [
-        'controller' => 'RegisterController',
-        'action' => 'showRegistrationForm',
-        'middleware' => [],
-        'http_method' => 'GET',
-        'name' => 'register'
-    ],
-    'signup' => [
-        'controller' => 'RegisterController',
-        'action' => 'register',
-        'middleware' => [],
-        'http_method' => 'POST',
-        'name' => 'signup'
-    ],
-    'login' => [
-        'controller' => 'AuthController',
-        'action' => 'showLoginForm',
-        'middleware' => [],
-        'http_method' => 'GET',
-        'name' => 'login'
-    ],
-    'signin' => [
-        'controller' => 'AuthController',
-        'action' => 'login',
-        'middleware' => [],
-        'http_method' => 'POST',
-        'name' => 'signin'
-    ],
-    'logout' => [
-        'controller' => 'AuthController',
-        'action' => 'logout',
-        'middleware' => ['Authenticate'],
-        'http_method' => 'GET',
-        'name' => 'logout'
-    ],
-    'activate' => [
-        'controller' => 'RegisterController',
-        'action' => 'activate',
-        'middleware' => [],
-        'http_method' => 'POST',
-        'name' => 'activate'
-    ],
-    'recovery_email' => [
-        'controller' => 'UserController',
-        'action' => 'showRecoveryFormMail',
-        'middleware' => [],
-        'http_method' => 'GET',
-        'name' => 'recovery_email'
-    ],
-    'send_recovery_mail' => [
-        'controller' => 'UserController',
-        'action' => 'sendRecoveryMail',
-        'middleware' => [],
-        'http_method' => 'GET',
-        'name' => 'send_recovery_mail'
-    ],
-    'recovery_form' => [
-        'controller' => 'UserController',
-        'action' => 'showRecoveryForm',
-        'middleware' => [],
-        'http_method' => 'POST',
-        'name' => 'recovery_form'
-    ],
-    'reset_password' => [
-        'controller' => 'UserController',
-        'action' => 'resetPassword',
-        'middleware' => [],
-        'http_method' => 'POST',
-        'name' => 'reset_password'
-    ],
-    'profile' => [
-        'controller' => 'UserController',
-        'action' => 'profile',
-        'middleware' => ['Authenticate'],
-        'http_method' => 'GET',
-        'name' => 'profile',
-    ],
-    '' => [
-        'controller' => 'HomeController',
-        'action' => 'index',
-        'middleware' => [],
-        'http_method' => 'GET',
-        'name' => 'home',
-    ],
-    'settings' => [
-        'controller' => 'UserController',
-        'action' => 'getSettingProfile',
-        'middleware' => ['Authenticate'],
-        'http_method' => 'GET',
-        'name' => 'settings',  
-    ],
-    'update_settings' => [
-        'controller' => 'UserController',
-        'action' => 'updateSettingProfile',
-        'middleware' => ['Authenticate'],
-        'http_method' => 'POST',
-        'name' => 'update_settings',  
-    ],
+    // REGISTRATION
+    new Route('register', 'RegisterController', 'showRegistrationForm', 'GET'),
+    new Route('signup', 'RegisterController', 'register', 'POST'),
+    new Route('activate', 'RegisterController', 'activate', 'POST'),
+
+    // Authorization
+    new Route('login', 'AuthController', 'showLoginForm', 'GET'),
+    new Route('signin', 'AuthController', 'login', 'POST'),
+    new Route('logout', 'AuthController', 'logout', 'GET', 'logout', ['Authenticate']),
+    
+    //RECOVERY PASSWORD
+    new Route('recovery_email', 'UserController', 'showRecoveryFormMail', 'GET'),
+    new Route('send_recovery_mail', 'UserController', 'sendRecoveryMail', 'GET'),
+    new Route('recovery_form', 'UserController', 'showRecoveryForm', 'POST'),
+    new Route('reset_password', 'UserController', 'resetPassword', 'POST'),
+
+    // PROFILE
+    new Route('profile', 'UserController', 'profile', 'GET', 'profile', ['Authenticate']),
+
+    // HOME
+    new Route('', 'HomeController', 'index', 'GET', 'home'),
+
+    // USER SETTINGS
+    new Route('settings', 'UserController', 'getSettingProfile', 'GET', 'settings', ['Authenticate']),
+    new Route('update_settings', 'UserController', 'updateSettingProfile', 'POST', 'update_settings', ['Authenticate']),
+
+    // GALLERY
+    new Route('edited_images', 'EditedPhotoController', 'index', 'GET', 'edited_images.index', ['Authenticate']),
+    new Route('edited_images\/(?P<edited_image_id>[^\/]+)', 'EditedPhotoController', 'destroy', 'DELETE', 'edited_images.destroy', ['Authenticate', 'IsCreator']),
+    new Route('edited_images\/(?P<edited_image_id>[^\/]+)', 'EditedPhotoController', 'show', 'GET', 'edited_images.show', ['Authenticate']),
+
+    //COMMENT
+    new Route('comments', 'CommentController', 'store', 'POST', 'comments.store', ['Authenticate']),
+    new Route('comments\/(?P<comment_id>[^\/]+)', 'CommentController', 'destroy', 'DELETE', 'comments.destroy', ['Authenticate']),
+
+    //LIKES
+    new Route('likes', 'likeController', 'store', 'POST', 'likes.store', ['Authenticate']),
+    new Route('likes\/(?P<like_id>[^\/]+)', 'likeController', 'destroy', 'DELETE', 'likes.destroy', ['Authenticate', 'IsLikeCreator']),
 ];

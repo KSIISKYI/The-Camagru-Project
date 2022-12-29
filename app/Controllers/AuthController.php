@@ -25,15 +25,15 @@ class AuthController extends Controller
             exit();
         } else {
             $_SESSION['user_id'] = $user['id'];
-            header('Location: profile');
-            exit();
+
+            redirect(route(['name' => 'profile']));
         }
     }
     
     function logout()
     {
         unset($_SESSION['user_id']);
-        header('Location: login');
-        exit();
+
+        redirect(route(['name' => 'login']));
     }
 }

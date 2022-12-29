@@ -1,0 +1,91 @@
+{% extends 'layouts/base.twig' %}
+
+{% block content %}
+
+<div class="gallery__content">
+
+    <div class="galery__list">
+    {% for image in images %}
+
+        {% set is_liked = false %}
+        {% set like_id = '' %}
+
+        <div class="galery__item">
+            <div class="galery__item__header">
+                <p>{{ image.user.user_name }}</p>
+                <p>{{ image.created_at|date("Y-m-d") }}</p>
+                {% if getUser().id == image.user_id %}
+                    <button class="delete_edited_image_btn_demo" value="{{ image.name }}">
+                        <img src="http://localhost/The-Camagru-Project/public/img/basket.png" style=" width:20px; height:auto;">
+                    </button>
+                {% endif %}
+            </div>
+            <a href="{{ route({'name':'edited_images.show', 'edited_image_id':image.name}) }}">
+                <div class="galery__item__hover">Show</div>
+                <img src="http://localhost/The-Camagru-Project/public/img/edited_images/{{ image.name }}">  
+            </a>
+            <div class="galery__item__footer">
+                <div>
+                    {% for like in image.likes %}
+                        {% if like.user_id == getUser().id %}
+                            {% set is_liked = true %}
+                            {% set like_id = like.id %}
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if image.likes|length > 0 %}
+                        {{ image.likes|length }}
+                    {% endif%}
+                    
+                    {% if is_liked %}
+                    <button class="liked" value='{{ like_id }}'>
+                        <i class="fa-solid fa-heart" style='color:#c80404'></i>
+                    </button>
+                        
+                    {% else %}
+                        <form method="POST" action="{{ route({'name': 'likes.store'}) }}">
+                            <input type="hidden" value={{ image.name }} name="edited_image_id">
+                            <button class="not_liked">
+                                <i class="fa-regular fa-heart"></i>
+                            </button>
+                        </form>
+                    {% endif %}
+                    </div>
+
+                <div>
+                    {{ image.comments|length }}
+                    <i class="fa-solid fa-comment"></i>
+                </div>
+                
+            </div>
+        </div>
+
+    {% endfor %}
+    </div>
+
+    {% if page_obj.has_other_pages %}
+    <div class="pgn">
+        {% if page_obj.has_previous and  page_obj.previous_page_number != 1 %}
+            <a href="{{ route({'name':'edited_images.index'}) }}?page=1"><div class="pgn__cell"><<</div></a>
+        {% endif %}
+
+        {% if page_obj.has_previous %}
+            <a href="{{ route({'name':'edited_images.index'}) }}?page={{ page_obj.previous_page_number }}"><div class="pgn__cell"><</div></a>
+        {% endif %}
+        
+        <div class="pgn__cell pgn__cell_press">{{ page_obj.current_page_number }}</div>
+
+        {% if page_obj.has_next %}
+            <a href="{{ route({'name':'edited_images.index'}) }}?page={{ page_obj.next_page_number }}"><div class="pgn__cell">></div></a>
+        {% endif %}
+
+        {% if page_obj.has_next and  page_obj.next_page_number != page_obj.last_page_number %}
+            <a href="{{ route({'name':'edited_images.index'}) }}?page={{ page_obj.last_page_number }}"><div class="pgn__cell">>></div></a>
+        {% endif %}
+        
+    </div>
+    {% endif %}
+
+</div>
+    
+{% endblock %}

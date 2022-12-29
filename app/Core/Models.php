@@ -10,17 +10,26 @@ abstract class Models
     protected $table;
 
     function __construct() {
-        if (file_exists(APP_ROOT.'/database/database.sqlite')) {
-            $this->db = new PDO('sqlite:'.APP_ROOT.'/database/database.sqlite');
-        } else {
-            echo 'Connection error';
-        }
+        // this connction if use MySQL
+        $this->db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME, DB_USER, DB_PASS);
+
+        // this connectin if use SQLite
+        // if (file_exists(APP_ROOT.'/database/database.sqlite')) {
+        //     $this->db = new PDO('sqlite:'.APP_ROOT.'/database/database.sqlite');
+        // } else {
+        //     echo 'Connection error';
+        // }
     }
 
     //get record by $field filed
-    function get($field, $value)
+    function get($field, $value, $table = null)
     {
-        $pr = $this->db->prepare('SELECT * FROM ' . $this->table . ' WHERE ' . $field . ' = ?');
+        if ($table) {
+            $pr = $this->db->prepare('SELECT * FROM ' . $table . ' WHERE ' . $field . ' = ?');
+        } else {
+            $pr = $this->db->prepare('SELECT * FROM ' . $this->table . ' WHERE ' . $field . ' = ?');
+        }
+
         $pr->execute([$value]);
         $data = $pr->fetch(PDO::FETCH_ASSOC);
 
@@ -28,12 +37,14 @@ abstract class Models
     }
 
     //filter records by filters
-    function filter(array $filers)
+    function filter(array $filers = [], $table = null)
     {
+        $table_name = isset($table) ? $table : $this->table;
+
         if (empty($filers)) {
-            $pr = $this->db->query('SELECT * FROM ' . $this->table);
+            $pr = $this->db->query('SELECT * FROM ' . $table_name);
         } else {
-            $query = 'SELECT * FROM ' . $this->table . ' WHERE ';
+            $query = 'SELECT * FROM ' . $table_name . ' WHERE ';
             foreach($filers as $key => $value) {
                 if (gettype($value) == 'string') $value = "'$value'";
                 $query .= $key . '=' . $value . ' AND ';
@@ -85,5 +96,17 @@ abstract class Models
 
         $query = "DELETE FROM $this->table WHERE $field = $value";
         $this->db->query($query);
+    }
+
+    // execute row sql query
+    function raw(string $sql_quary, $many = false)
+    {
+        $pr = $this->db->query($sql_quary);
+
+        if ($many) {
+            return $pr->fetchAll(PDO::FETCH_ASSOC);
+        } else {
+            return $pr->fetch(PDO::FETCH_ASSOC);
+        }
     }
 }

@@ -5,8 +5,6 @@ namespace App\Controllers;
 use App\Models\{User, RecoveryUser};
 use App\Core\Controller;
 
-require APP_ROOT . '/app/Core/funcs.php';
-
 class UserController extends Controller
 {
     function showRecoveryFormMail()
@@ -45,14 +43,15 @@ class UserController extends Controller
         $user_model = new User;
 
         if (isset($this->request->data["token"]) and $recovery_user = $recovery_user_model->get('token', $this->request->data["token"])) {
-            if ($this->request->data['password'] !== $this->request->data['confirm_password']) {
-                echo $this->view->render('auth/recoveryForm.twig', ['recovery_token' => $this->request->data["token"], 'form_message' => 'Паролі не збігаються']);
-                exit();
+            $errors = checkPassword($this->request->data['password'], $this->request->data['confirm_password']);
+
+            if ($errors) {
+                return $this->view->render('auth/recoveryForm.twig', ['recovery_token' => $this->request->data["token"], 'form_messages' => $errors]);
             } else {
-                $user = $user_model->update($recovery_user['user_id'], ['password' => password_hash($this->request->data['password'], PASSWORD_DEFAULT)]);
+                $user_model->update($recovery_user['user_id'], ['password' => password_hash($this->request->data['password'], PASSWORD_DEFAULT)]);
                 $recovery_user_model->delete('user_id', $recovery_user['user_id']);
-                header('Location: login');
-                exit();
+                
+                redirect(route(['name' => 'login']));
             }
         } else {
             echo 'BAD';
