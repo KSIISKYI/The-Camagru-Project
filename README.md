@@ -65,7 +65,7 @@ There are different effect images such as glasses, mustache, beard and other. Yo
 ### Installation:
 1. Clone the repository
 ```
-https://github.com/KSIISKYI/The-Camagru-Project.git
+git clone https://github.com/KSIISKYI/The-Camagru-Project.git
 ```
 
 2. Install composer 
